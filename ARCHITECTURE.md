@@ -12,85 +12,124 @@ This system implements a sophisticated multi-agent research architecture where f
 - **Shared Intelligence**: All agents share knowledge through a central repository
 - **Fault Tolerance**: Robust error handling and workflow management
 
-## 📊 Architecture Diagram
+## 📊 System Architecture Overview
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                          🎛️ AGENT ORCHESTRATOR                              │
-│                     (System Controller & API Gateway)                       │
-│  • Manages agent lifecycle    • Handles API requests                       │
-│  • Coordinates workflows      • Provides system status                     │
-│  • Background task processing • Knowledge management                       │
-└─────────────────────┬─────────────────────┬─────────────────────────────────┘
-                      │                     │
-         ┌────────────┴────────────┐       │
-         │                         │       │
-         ▼                         ▼       ▼
-┌─────────────────┐    ┌─────────────────┐ ┌─────────────────┐
-│  🔄 WORKFLOW     │    │  📋 TASK        │ │  🧠 SHARED      │
-│     ENGINE       │    │  COORDINATOR    │ │  KNOWLEDGE      │
-└─────────────────┘    └─────────────────┘ └─────────────────┘
-│ • Step execution │    │ • Queue mgmt    │ │ • Central store │
-│ • Dependency mgmt│    │ • Task routing  │ │ • Cross-agent   │
-│ • Error handling │    │ • Status track  │ │   communication │
-│ • Parallel tasks │    │ • History logs  │ │ • Search index  │
-└─────────────────┘    └─────────────────┘ └─────────────────┘
-         │                         │
-         └─────────────┬───────────┘
-                       │
-    ┌──────────────────┼──────────────────┐
-    │                  │                  │
-    ▼                  ▼                  ▼                  ▼
-┌─────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
-│🔍 SEARCH│    │📊 ANALYST   │    │✅ CRITIC    │    │✍️ WRITER    │
-│  AGENT  │────│   AGENT     │────│   AGENT     │────│   AGENT     │
-└─────────┘    └─────────────┘    └─────────────┘    └─────────────┘
-     │                │                  │                  │
-     │                │                  │                  │
-     ▼                ▼                  ▼                  ▼
-┌─────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
-│Parallel │    │  Parallel   │    │  Parallel   │    │  Parallel   │
-│.ai Task │    │  .ai Task   │    │  .ai Task   │    │  .ai Task   │
-│API      │    │  API        │    │  API        │    │  API        │
-│(Search) │    │ (Analysis)  │    │(Verification)│    │(Generation) │
-└─────────┘    └─────────────┘    └─────────────┘    └─────────────┘
+```mermaid
+graph TB
+    %% User Interface
+    User[👤 User] --> AO[🎛️ Agent Orchestrator<br/>System Controller & API Gateway]
+    
+    %% Core Coordination Layer
+    AO --> WE[🔄 Workflow Engine<br/>• Step execution<br/>• Dependency mgmt<br/>• Error handling]
+    AO --> TC[📋 Task Coordinator<br/>• Queue management<br/>• Task routing<br/>• Status tracking]
+    AO --> SK[🧠 Shared Knowledge<br/>• Central storage<br/>• Cross-agent comm<br/>• Search indexing]
+    
+    %% Agent Layer
+    WE --> SA[🔍 Search Agent<br/>Information Retrieval]
+    WE --> AA[📊 Analyst Agent<br/>Data Processing]
+    WE --> CA[✅ Critic Agent<br/>Verification & QA]
+    WE --> WA[✍️ Writer Agent<br/>Content Generation]
+    
+    %% API Integration Layer
+    SA --> API1[⚡ Parallel.ai Task API<br/>Search & Retrieval<br/>Processors: base, pro]
+    AA --> API2[⚡ Parallel.ai Task API<br/>Analysis & Processing<br/>Processors: core, ultra]
+    CA --> API3[⚡ Parallel.ai Task API<br/>Verification & Validation<br/>Processors: pro, ultra]
+    WA --> API4[⚡ Parallel.ai Task API<br/>Content Generation<br/>Processors: lite, base]
+    
+    %% Memory System
+    SA --> MEM1[💾 Search Memory]
+    AA --> MEM2[💾 Analysis Memory]
+    CA --> MEM3[💾 Verification Memory]
+    WA --> MEM4[💾 Content Memory]
+    
+    MEM1 --> SK
+    MEM2 --> SK
+    MEM3 --> SK
+    MEM4 --> SK
+    
+    %% Output
+    WA --> Report[📄 Research Report]
+    Report --> User
+    
+    %% Styling
+    classDef userClass fill:#e1f5fe,stroke:#0277bd,stroke-width:2px
+    classDef orchestratorClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef coordinationClass fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
+    classDef agentClass fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef apiClass fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    classDef memoryClass fill:#f1f8e9,stroke:#689f38,stroke-width:2px
+    classDef outputClass fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    
+    class User userClass
+    class AO orchestratorClass
+    class WE,TC,SK coordinationClass
+    class SA,AA,CA,WA agentClass
+    class API1,API2,API3,API4 apiClass
+    class MEM1,MEM2,MEM3,MEM4 memoryClass
+    class Report outputClass
 ```
 
 ## 🔄 Research Workflow Pipeline
 
-```
-📝 USER QUERY
-     │
-     ▼
-🔍 STEP 1: SEARCH AGENT
-│  ├─ Web research via Parallel.ai Task API
-│  ├─ Information gathering and extraction  
-│  ├─ Source identification and ranking
-│  └─ Raw data collection
-     │
-     ▼
-📊 STEP 2: ANALYST AGENT  
-│  ├─ Data processing and analysis
-│  ├─ Pattern recognition and insights
-│  ├─ Statistical analysis and trends
-│  └─ Structured findings generation
-     │
-     ▼
-✅ STEP 3: CRITIC AGENT
-│  ├─ Fact-checking and verification
-│  ├─ Source credibility assessment
-│  ├─ Bias detection and correction
-│  └─ Quality assurance validation
-     │
-     ▼
-✍️ STEP 4: WRITER AGENT
-│  ├─ Content synthesis and generation
-│  ├─ Report structuring and formatting
-│  ├─ Citation management
-│  └─ Final deliverable creation
-     │
-     ▼
-📄 RESEARCH REPORT
+```mermaid
+flowchart TD
+    %% Input
+    Query[📝 User Research Query<br/>Natural language input] --> Search
+    
+    %% Step 1: Search Agent
+    Search[🔍 SEARCH AGENT<br/>Information Retrieval Specialist]
+    Search --> SearchTasks[Web Research Tasks:<br/>• Information gathering<br/>• Source identification<br/>• Data extraction<br/>• Query optimization]
+    SearchTasks --> SearchAPI[⚡ Parallel.ai Task API<br/>Processor: base/pro]
+    SearchAPI --> SearchResults[📊 Search Results<br/>Raw data & sources]
+    
+    %% Step 2: Analyst Agent  
+    SearchResults --> Analysis[📊 ANALYST AGENT<br/>Data Processing Specialist]
+    Analysis --> AnalysisTasks[Analysis Tasks:<br/>• Pattern recognition<br/>• Statistical analysis<br/>• Insight generation<br/>• Data correlation]
+    AnalysisTasks --> AnalysisAPI[⚡ Parallel.ai Task API<br/>Processor: core/ultra]
+    AnalysisAPI --> AnalysisResults[🔬 Analysis Results<br/>Insights & findings]
+    
+    %% Step 3: Critic Agent
+    AnalysisResults --> Verification[✅ CRITIC AGENT<br/>Verification & QA Specialist]
+    Verification --> VerificationTasks[Verification Tasks:<br/>• Fact-checking<br/>• Source credibility<br/>• Bias detection<br/>• Quality assurance]
+    VerificationTasks --> VerificationAPI[⚡ Parallel.ai Task API<br/>Processor: pro/ultra]
+    VerificationAPI --> VerificationResults[✅ Verified Data<br/>Quality scores & evidence]
+    
+    %% Step 4: Writer Agent
+    VerificationResults --> Writing[✍️ WRITER AGENT<br/>Content Generation Specialist]
+    Writing --> WritingTasks[Content Tasks:<br/>• Content synthesis<br/>• Report structuring<br/>• Citation management<br/>• Format optimization]
+    WritingTasks --> WritingAPI[⚡ Parallel.ai Task API<br/>Processor: lite/base]
+    WritingAPI --> FinalReport[📄 RESEARCH REPORT<br/>Comprehensive deliverable]
+    
+    %% Memory Storage (parallel to main flow)
+    SearchResults --> SearchMem[💾 Search Memory]
+    AnalysisResults --> AnalysisMem[💾 Analysis Memory]
+    VerificationResults --> VerificationMem[💾 Verification Memory]
+    FinalReport --> ContentMem[💾 Content Memory]
+    
+    SearchMem --> SharedKnowledge[🧠 Shared Knowledge Repository]
+    AnalysisMem --> SharedKnowledge
+    VerificationMem --> SharedKnowledge
+    ContentMem --> SharedKnowledge
+    
+    %% Final Output
+    FinalReport --> UserOutput[👤 User Receives<br/>Complete Research Report]
+    
+    %% Styling
+    classDef inputClass fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef agentClass fill:#fff3e0,stroke:#f57c00,stroke-width:3px
+    classDef taskClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef apiClass fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    classDef resultClass fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
+    classDef memoryClass fill:#f1f8e9,stroke:#689f38,stroke-width:2px
+    classDef outputClass fill:#e1f5fe,stroke:#0277bd,stroke-width:3px
+    
+    class Query,UserOutput inputClass
+    class Search,Analysis,Verification,Writing agentClass
+    class SearchTasks,AnalysisTasks,VerificationTasks,WritingTasks taskClass
+    class SearchAPI,AnalysisAPI,VerificationAPI,WritingAPI apiClass
+    class SearchResults,AnalysisResults,VerificationResults,FinalReport resultClass
+    class SearchMem,AnalysisMem,VerificationMem,ContentMem,SharedKnowledge memoryClass
+    class FinalReport outputClass
 ```
 
 ## 🤖 Agent Detailed Specifications
@@ -201,6 +240,44 @@ Each agent has dedicated memory storage optimized for its specific data types:
   - Historical workflow results and performance metrics
 - **Access Pattern**: High-frequency read/write from all agents
 
+### Memory System Architecture
+
+```mermaid
+graph TB
+    %% Agents
+    SA[🔍 Search Agent] --> SM[💾 Search Memory<br/>• Queries & Results<br/>• Source URLs<br/>• API Responses<br/>• Search History]
+    AA[📊 Analyst Agent] --> AM[💾 Analysis Memory<br/>• Statistical Results<br/>• Pattern Data<br/>• Insights & Findings<br/>• Correlations]
+    CA[✅ Critic Agent] --> VM[💾 Verification Memory<br/>• Fact-check Results<br/>• Credibility Scores<br/>• Validation Data<br/>• Quality Metrics]
+    WA[✍️ Writer Agent] --> CM[💾 Content Memory<br/>• Generated Reports<br/>• Templates<br/>• Style Guidelines<br/>• Citations]
+    
+    %% Shared Knowledge Hub
+    SM --> SKR[🧠 Shared Knowledge Repository<br/>• Unified Knowledge Graph<br/>• Cross-agent Dependencies<br/>• Search Index<br/>• Performance Metrics]
+    AM --> SKR
+    VM --> SKR
+    CM --> SKR
+    
+    %% Cross-agent Access
+    SKR -.-> SA
+    SKR -.-> AA
+    SKR -.-> CA
+    SKR -.-> WA
+    
+    %% External Storage
+    SKR --> DB[(🗄️ Database<br/>SQLite/PostgreSQL)]
+    SKR --> CACHE[(⚡ Redis Cache<br/>Fast Access)]
+    
+    %% Styling
+    classDef agentClass fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef memoryClass fill:#f1f8e9,stroke:#689f38,stroke-width:2px
+    classDef sharedClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+    classDef storageClass fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    
+    class SA,AA,CA,WA agentClass
+    class SM,AM,VM,CM memoryClass
+    class SKR sharedClass
+    class DB,CACHE storageClass
+```
+
 ## ⚙️ System Coordination Components
 
 ### 🎛️ Agent Orchestrator
@@ -230,11 +307,46 @@ Each agent has dedicated memory storage optimized for its specific data types:
 ## 🔄 Data Flow & Communication Patterns
 
 ### Sequential Pipeline (Primary Pattern)
-```
-Query → Search → Analysis → Verification → Content → Response
-   ↓        ↓         ↓           ↓          ↓        ↓
-Memory   Memory    Memory      Memory     Memory   Knowledge
-Store    Store     Store       Store      Store    Repository
+
+```mermaid
+graph LR
+    %% Main Data Flow
+    Q[📝 Query] --> S[🔍 Search]
+    S --> A[📊 Analysis] 
+    A --> V[✅ Verification]
+    V --> C[✍️ Content]
+    C --> R[📄 Response]
+    
+    %% Memory Storage
+    S --> MS[💾 Search<br/>Memory]
+    A --> MA[💾 Analysis<br/>Memory]
+    V --> MV[💾 Verification<br/>Memory]
+    C --> MC[💾 Content<br/>Memory]
+    
+    %% Knowledge Repository
+    MS --> KR[🧠 Knowledge<br/>Repository]
+    MA --> KR
+    MV --> KR
+    MC --> KR
+    
+    %% Cross-references
+    KR -.-> S
+    KR -.-> A
+    KR -.-> V
+    KR -.-> C
+    
+    %% Styling
+    classDef queryClass fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef agentClass fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef memoryClass fill:#f1f8e9,stroke:#689f38,stroke-width:2px
+    classDef knowledgeClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+    classDef responseClass fill:#e1f5fe,stroke:#0277bd,stroke-width:2px
+    
+    class Q queryClass
+    class S,A,V,C agentClass
+    class MS,MA,MV,MC memoryClass
+    class KR knowledgeClass
+    class R responseClass
 ```
 
 ### Cross-Agent Communication
@@ -355,6 +467,68 @@ python run.py
 ```
 
 ### Production Deployment
+
+```mermaid
+graph TB
+    %% External Layer
+    Users[👥 Users] --> LB[⚖️ Load Balancer<br/>NGINX/HAProxy]
+    
+    %% Application Layer
+    LB --> APP1[🚀 Deep Research Instance 1<br/>FastAPI + Uvicorn<br/>Port 8000]
+    LB --> APP2[🚀 Deep Research Instance 2<br/>FastAPI + Uvicorn<br/>Port 8001]
+    LB --> APP3[🚀 Deep Research Instance N<br/>FastAPI + Uvicorn<br/>Port 800N]
+    
+    %% Agent Layer (within each instance)
+    APP1 --> AGENTS1[🤖 Multi-Agent System<br/>Search • Analyst • Critic • Writer]
+    APP2 --> AGENTS2[🤖 Multi-Agent System<br/>Search • Analyst • Critic • Writer]
+    APP3 --> AGENTS3[🤖 Multi-Agent System<br/>Search • Analyst • Critic • Writer]
+    
+    %% External APIs
+    AGENTS1 --> PAPI[⚡ Parallel.ai APIs<br/>Task Execution]
+    AGENTS2 --> PAPI
+    AGENTS3 --> PAPI
+    
+    AGENTS1 --> OAPI[🤖 OpenAI API<br/>Agno Framework]
+    AGENTS2 --> OAPI
+    AGENTS3 --> OAPI
+    
+    %% Data Layer
+    APP1 --> REDIS[(⚡ Redis Cluster<br/>Caching & Sessions)]
+    APP2 --> REDIS
+    APP3 --> REDIS
+    
+    APP1 --> DB[(🗄️ PostgreSQL<br/>Primary Database)]
+    APP2 --> DB
+    APP3 --> DB
+    
+    %% Monitoring & Logging
+    APP1 --> MON[📊 Monitoring<br/>Prometheus + Grafana]
+    APP2 --> MON
+    APP3 --> MON
+    
+    APP1 --> LOGS[📝 Centralized Logging<br/>ELK Stack]
+    APP2 --> LOGS
+    APP3 --> LOGS
+    
+    %% Styling
+    classDef userClass fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef infraClass fill:#f1f8e9,stroke:#689f38,stroke-width:2px
+    classDef appClass fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef agentClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef apiClass fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    classDef dataClass fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
+    classDef monitorClass fill:#e1f5fe,stroke:#0277bd,stroke-width:2px
+    
+    class Users userClass
+    class LB infraClass
+    class APP1,APP2,APP3 appClass
+    class AGENTS1,AGENTS2,AGENTS3 agentClass
+    class PAPI,OAPI apiClass
+    class REDIS,DB dataClass
+    class MON,LOGS monitorClass
+```
+
+**Components:**
 - **Web Server**: FastAPI with Uvicorn (async ASGI)
 - **Database**: PostgreSQL recommended for production
 - **Caching**: Redis for session and result caching
