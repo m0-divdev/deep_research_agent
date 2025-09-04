@@ -50,23 +50,6 @@ graph TB
     %% Output
     WA --> Report[📄 Research Report]
     Report --> User
-    
-    %% Styling
-    classDef userClass fill:#e1f5fe,stroke:#0277bd,stroke-width:2px
-    classDef orchestratorClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    classDef coordinationClass fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
-    classDef agentClass fill:#fff3e0,stroke:#f57c00,stroke-width:2px
-    classDef apiClass fill:#fce4ec,stroke:#c2185b,stroke-width:2px
-    classDef memoryClass fill:#f1f8e9,stroke:#689f38,stroke-width:2px
-    classDef outputClass fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
-    
-    class User userClass
-    class AO orchestratorClass
-    class WE,TC,SK coordinationClass
-    class SA,AA,CA,WA agentClass
-    class API1,API2,API3,API4 apiClass
-    class MEM1,MEM2,MEM3,MEM4 memoryClass
-    class Report outputClass
 ```
 
 ## 🔄 Research Workflow Pipeline
@@ -113,23 +96,6 @@ flowchart TD
     
     %% Final Output
     FinalReport --> UserOutput[👤 User Receives<br/>Complete Research Report]
-    
-    %% Styling
-    classDef inputClass fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
-    classDef agentClass fill:#fff3e0,stroke:#f57c00,stroke-width:3px
-    classDef taskClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    classDef apiClass fill:#fce4ec,stroke:#c2185b,stroke-width:2px
-    classDef resultClass fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
-    classDef memoryClass fill:#f1f8e9,stroke:#689f38,stroke-width:2px
-    classDef outputClass fill:#e1f5fe,stroke:#0277bd,stroke-width:3px
-    
-    class Query,UserOutput inputClass
-    class Search,Analysis,Verification,Writing agentClass
-    class SearchTasks,AnalysisTasks,VerificationTasks,WritingTasks taskClass
-    class SearchAPI,AnalysisAPI,VerificationAPI,WritingAPI apiClass
-    class SearchResults,AnalysisResults,VerificationResults,FinalReport resultClass
-    class SearchMem,AnalysisMem,VerificationMem,ContentMem,SharedKnowledge memoryClass
-    class FinalReport outputClass
 ```
 
 ## 🤖 Agent Detailed Specifications
@@ -265,17 +231,6 @@ graph TB
     %% External Storage
     SKR --> DB[(🗄️ Database<br/>SQLite/PostgreSQL)]
     SKR --> CACHE[(⚡ Redis Cache<br/>Fast Access)]
-    
-    %% Styling
-    classDef agentClass fill:#fff3e0,stroke:#f57c00,stroke-width:2px
-    classDef memoryClass fill:#f1f8e9,stroke:#689f38,stroke-width:2px
-    classDef sharedClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
-    classDef storageClass fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
-    
-    class SA,AA,CA,WA agentClass
-    class SM,AM,VM,CM memoryClass
-    class SKR sharedClass
-    class DB,CACHE storageClass
 ```
 
 ## ⚙️ System Coordination Components
@@ -334,19 +289,6 @@ graph LR
     KR -.-> A
     KR -.-> V
     KR -.-> C
-    
-    %% Styling
-    classDef queryClass fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
-    classDef agentClass fill:#fff3e0,stroke:#f57c00,stroke-width:2px
-    classDef memoryClass fill:#f1f8e9,stroke:#689f38,stroke-width:2px
-    classDef knowledgeClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
-    classDef responseClass fill:#e1f5fe,stroke:#0277bd,stroke-width:2px
-    
-    class Q queryClass
-    class S,A,V,C agentClass
-    class MS,MA,MV,MC memoryClass
-    class KR knowledgeClass
-    class R responseClass
 ```
 
 ### Cross-Agent Communication
@@ -509,23 +451,6 @@ graph TB
     APP1 --> LOGS[📝 Centralized Logging<br/>ELK Stack]
     APP2 --> LOGS
     APP3 --> LOGS
-    
-    %% Styling
-    classDef userClass fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
-    classDef infraClass fill:#f1f8e9,stroke:#689f38,stroke-width:2px
-    classDef appClass fill:#fff3e0,stroke:#f57c00,stroke-width:2px
-    classDef agentClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    classDef apiClass fill:#fce4ec,stroke:#c2185b,stroke-width:2px
-    classDef dataClass fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
-    classDef monitorClass fill:#e1f5fe,stroke:#0277bd,stroke-width:2px
-    
-    class Users userClass
-    class LB infraClass
-    class APP1,APP2,APP3 appClass
-    class AGENTS1,AGENTS2,AGENTS3 agentClass
-    class PAPI,OAPI apiClass
-    class REDIS,DB dataClass
-    class MON,LOGS monitorClass
 ```
 
 **Components:**
