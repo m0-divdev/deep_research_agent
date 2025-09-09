@@ -120,8 +120,11 @@ temp/
 # ========================================
 # 🧠 AI AGENT DATA & MEMORY
 # ========================================
-# Agent memory files
-memory/
+# Agent memory data files (not source code)
+memory/data/
+memory/storage/
+memory/*.db
+memory/*.sqlite
 agent_memory/
 *.memory
 *.knowledge
